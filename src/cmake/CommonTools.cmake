@@ -204,6 +204,7 @@ macro(set_cpp name)
         cxx_std_23
     )
 
+
     target_link_options(${name} PRIVATE
         -D2:-AllowCompatibleILVersions
     )
@@ -232,6 +233,19 @@ macro(set_cpp name)
             MSVC_RUNTIME_LIBRARY MultiThreadedDLL
         )
     endif()
+	
+	if(MFC_FOUND)
+		#set_target_properties(${name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+	
+		target_link_options(${name} PRIVATE /ENTRY:wWinMainCRTStartup)
+		
+		target_compile_definitions(${name} PRIVATE 
+		-DWIN32
+		-D_DEBUG
+		-D_WINDOWS
+		-D_AFXDLL
+		)
+	endif()
 
     if(CMAKE_BUILD_TYPE STREQUAL "")
         set(CMAKE_BUILD_TYPE RelWithDebInfo)
