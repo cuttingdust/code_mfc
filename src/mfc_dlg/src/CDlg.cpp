@@ -20,10 +20,23 @@ CDlg::~CDlg()
 void CDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_BUTTON1, m_btn_OK);
+    DDX_Control(pDX, IDC_EDIT1, m_edit_ctl);
 }
 
+void CDlg::OnBnClickedButton1()
+{
+    /// windows api 的使用
+    // ::MessageBox(NULL, TEXT("Hello"), TEXT("CMyDlg的Button"), MB_OK);
+
+    // HWND hEdit = ::GetDlgItem(m_hWnd, IDC_EDIT1);
+    // ::SetWindowText(hEdit, TEXT("我是Edit"));
+
+    m_edit_ctl.SetWindowText(TEXT("我是CEdit"));
+}
 
 BEGIN_MESSAGE_MAP(CDlg, CDialogEx)
+ON_BN_CLICKED(IDC_BUTTON1, &CDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
