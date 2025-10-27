@@ -9,7 +9,7 @@
 
 IMPLEMENT_DYNAMIC(CDlg, CDialogEx)
 
-CDlg::CDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_DLGDEMO, pParent)
+CDlg::CDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_DLGDEMO, pParent), m_edit_cs(_T(""))
 {
 }
 
@@ -22,6 +22,7 @@ void CDlg::DoDataExchange(CDataExchange* pDX)
     CDialogEx::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_BUTTON1, m_btn_OK);
     DDX_Control(pDX, IDC_EDIT1, m_edit_ctl);
+    DDX_Text(pDX, IDC_EDIT1, m_edit_cs);
 }
 
 void CDlg::OnBnClickedButton1()
@@ -32,7 +33,12 @@ void CDlg::OnBnClickedButton1()
     // HWND hEdit = ::GetDlgItem(m_hWnd, IDC_EDIT1);
     // ::SetWindowText(hEdit, TEXT("我是Edit"));
 
-    m_edit_ctl.SetWindowText(TEXT("我是CEdit"));
+    /// 控制
+    // m_edit_ctl.SetWindowText(TEXT("我是CEdit"));
+
+    /// 变量
+    m_edit_cs = TEXT("我是CS类型的CEdit");
+    UpdateData(FALSE);
 }
 
 BEGIN_MESSAGE_MAP(CDlg, CDialogEx)
