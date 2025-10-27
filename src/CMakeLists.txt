@@ -68,6 +68,7 @@ include(CommonTools)
 
 add_subdirectory(mfc_helloworld)
 add_subdirectory(mfc_dlg)
+add_subdirectory(mfc_checkbox)
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
