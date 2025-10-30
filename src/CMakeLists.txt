@@ -73,6 +73,7 @@ add_subdirectory(mfc_combox)
 add_subdirectory(mfc_listbox)
 add_subdirectory(mfc_addr)
 add_subdirectory(mfc_workthread)
+add_subdirectory(mfc_multithreadfindfile)
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
