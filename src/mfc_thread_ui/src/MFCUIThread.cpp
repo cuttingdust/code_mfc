@@ -1,26 +1,26 @@
 ﻿
-// MFCCheckBox.cpp: 定义应用程序的类行为。
+// MFCUIThread.cpp: 定义应用程序的类行为。
 //
 
 #include "framework.h"
-#include "MFCCheckBox.h"
-#include "MFCCheckBoxDlg.h"
+#include "MFCUIThread.h"
+#include "MFCUIThreadDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CMFCCheckBoxApp
+// CMFCUIThreadApp
 
-BEGIN_MESSAGE_MAP(CMFCCheckBoxApp, CWinApp)
+BEGIN_MESSAGE_MAP(CMFCUIThreadApp, CWinApp)
 ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxApp 构造
+// CMFCUIThreadApp 构造
 
-CMFCCheckBoxApp::CMFCCheckBoxApp()
+CMFCUIThreadApp::CMFCUIThreadApp()
 {
     // 支持重新启动管理器
     m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -30,14 +30,14 @@ CMFCCheckBoxApp::CMFCCheckBoxApp()
 }
 
 
-// 唯一的 CMFCCheckBoxApp 对象
+// 唯一的 CMFCUIThreadApp 对象
 
-CMFCCheckBoxApp theApp;
+CMFCUIThreadApp theApp;
 
 
-// CMFCCheckBoxApp 初始化
+// CMFCUIThreadApp 初始化
 
-BOOL CMFCCheckBoxApp::InitInstance()
+BOOL CMFCUIThreadApp::InitInstance()
 {
     // 如果应用程序存在以下情况，Windows XP 上需要 InitCommonControlsEx()
     // 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
@@ -56,7 +56,7 @@ BOOL CMFCCheckBoxApp::InitInstance()
 
     // 创建 shell 管理器，以防对话框包含
     // 任何 shell 树视图控件或 shell 列表视图控件。
-    CShellManager* pShellManager = new CShellManager;
+    CShellManager *pShellManager = new CShellManager;
 
     // 激活“Windows Native”视觉管理器，以便在 MFC 控件中启用主题
     CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
@@ -70,7 +70,7 @@ BOOL CMFCCheckBoxApp::InitInstance()
     // 例如修改为公司或组织名
     SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
-    CMFCListBoxDlg dlg;
+    CMFCUIThreadDlg dlg;
     m_pMainWnd        = &dlg;
     INT_PTR nResponse = dlg.DoModal();
     if (nResponse == IDOK)

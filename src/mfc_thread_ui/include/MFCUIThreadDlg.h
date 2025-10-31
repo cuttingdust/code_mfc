@@ -1,22 +1,22 @@
 ﻿
-// MFCCheckBoxDlg.h: 头文件
+// MFCUIThreadDlg.h: 头文件
 //
 
 #pragma once
 
 
-// CMFCCheckBoxDlg 对话框
-class CMFCCheckBoxDlg : public CDialogEx
+// CMFCUIThreadDlg 对话框
+class CMFCUIThreadDlg : public CDialogEx
 {
     // 构造
 public:
-    CMFCCheckBoxDlg(CWnd* pParent = nullptr); // 标准构造函数
+    CMFCUIThreadDlg(CWnd* pParent = nullptr); // 标准构造函数
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
     enum
     {
-        IDD = IDD_MFCCHECKBOX_DIALOG
+        IDD = IDD_MFCUITHREAD_DIALOG
     };
 #endif
 
@@ -35,9 +35,6 @@ protected:
     afx_msg HCURSOR OnQueryDragIcon();
     DECLARE_MESSAGE_MAP()
 public:
-    // CButton      m_chk_btn;
-    // afx_msg void OnBnClickedChkStick();
-    // afx_msg void OnBnClickedAddToList();
+    afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
     afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-    afx_msg void OnBnDisplayCurText();
 };

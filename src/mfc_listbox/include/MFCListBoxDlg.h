@@ -1,16 +1,18 @@
 ﻿
-// MFCCheckBoxDlg.h: 头文件
+// MFCComBoxDlg.h: 头文件
 //
 
 #pragma once
 
+#include <afxdialogex.h>
 
-// CMFCCheckBoxDlg 对话框
-class CMFCCheckBoxDlg : public CDialogEx
+
+// CMFCListBoxDlg 对话框
+class CMFCListBoxDlg : public CDialogEx
 {
     // 构造
 public:
-    CMFCCheckBoxDlg(CWnd* pParent = nullptr); // 标准构造函数
+    CMFCListBoxDlg(CWnd* pParent = nullptr); // 标准构造函数
 
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
@@ -37,5 +39,7 @@ protected:
 public:
     // CButton      m_chk_btn;
     // afx_msg void OnBnClickedChkStick();
-    afx_msg void OnBnClickedAddToList();
+    // afx_msg void OnBnClickedAddToList();
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnBnDisplayCurText();
 };

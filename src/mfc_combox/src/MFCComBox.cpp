@@ -3,24 +3,24 @@
 //
 
 #include "framework.h"
-#include "MFCCheckBox.h"
-#include "MFCCheckBoxDlg.h"
+#include "MFCComBox.h"
+#include "MFCComBoxDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CMFCCheckBoxApp
+// CMFCComBoxApp
 
-BEGIN_MESSAGE_MAP(CMFCCheckBoxApp, CWinApp)
+BEGIN_MESSAGE_MAP(CMFCComBoxApp, CWinApp)
 ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxApp 构造
+// CMFCComBoxApp 构造
 
-CMFCCheckBoxApp::CMFCCheckBoxApp()
+CMFCComBoxApp::CMFCComBoxApp()
 {
     // 支持重新启动管理器
     m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -30,14 +30,14 @@ CMFCCheckBoxApp::CMFCCheckBoxApp()
 }
 
 
-// 唯一的 CMFCCheckBoxApp 对象
+// 唯一的 CMFCComBoxApp 对象
 
-CMFCCheckBoxApp theApp;
+CMFCComBoxApp theApp;
 
 
-// CMFCCheckBoxApp 初始化
+// CMFCComBoxApp 初始化
 
-BOOL CMFCCheckBoxApp::InitInstance()
+BOOL CMFCComBoxApp::InitInstance()
 {
     // 如果应用程序存在以下情况，Windows XP 上需要 InitCommonControlsEx()
     // 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，

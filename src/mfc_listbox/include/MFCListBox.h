@@ -1,8 +1,11 @@
 ﻿
-// MFCCheckBox.h: PROJECT_NAME 应用程序的主头文件
+// MFCListBox.h: PROJECT_NAME 应用程序的主头文件
 //
 
 #pragma once
+
+
+#include <afxwin.h>
 
 #ifndef __AFXWIN_H__
 #error "在包含此文件之前包含 'pch.h' 以生成 PCH"
@@ -11,14 +14,14 @@
 #include "resource.h" // 主符号
 
 
-// CMFCCheckBoxApp:
+// CMFCListBoxApp:
 // 有关此类的实现，请参阅 MFCCheckBox.cpp
 //
 
-class CMFCCheckBoxApp : public CWinApp
+class CMFCListBoxApp : public CWinApp
 {
 public:
-    CMFCCheckBoxApp();
+    CMFCListBoxApp();
 
     // 重写
 public:
@@ -29,4 +32,4 @@ public:
     DECLARE_MESSAGE_MAP()
 };
 
-extern CMFCCheckBoxApp theApp;
+extern CMFCListBoxApp theApp;

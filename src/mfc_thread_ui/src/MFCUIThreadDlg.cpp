@@ -1,11 +1,13 @@
 ﻿
-// MFCCheckBoxDlg.cpp: 实现文件
+// MFCUIThreadDlg.cpp: 实现文件
 //
 
 #include "framework.h"
-#include "MFCCheckBox.h"
-#include "MFCCheckBoxDlg.h"
+#include "MFCUIThread.h"
+#include "MFCUIThreadDlg.h"
 #include "afxdialogex.h"
+// #include "CThreadWnd.h"
+#include "CMyThread.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -19,7 +21,7 @@ class CAboutDlg : public CDialogEx
 public:
     CAboutDlg();
 
-    // 对话框数据
+// 对话框数据
 #ifdef AFX_DESIGN_TIME
     enum
     {
@@ -45,34 +47,34 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxDlg 对话框
+// CMFCUIThreadDlg 对话框
 
 
-MFCCheckBoxDlg::CMFCListBoxDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCCHECKBOX_DIALOG, pParent)
+CMFCUIThreadDlg::CMFCUIThreadDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCUITHREAD_DIALOG, pParent)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void MFCCheckBoxDlg::DoDataExchange(CDataExchange* pDX)
+void CMFCUIThreadDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    DDX_Control(pDX, IDC_CHK_STICK, m_chk_btn);
 }
 
-BEGIN_MESSAGE_MAP(MFCCheckBoxDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CMFCUIThreadDlg, CDialogEx)
 ON_WM_SYSCOMMAND()
 ON_WM_PAINT()
 ON_WM_QUERYDRAGICON()
-ON_BN_CLICKED(IDC_CHK_STICK, &MFCCheckBoxDlg::OnBnClickedChkStick)
+ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxDlg 消息处理程序
+// CMFCUIThreadDlg 消息处理程序
 
-BOOL MFCCheckBoxDlg::OnInitDialog()
+BOOL CMFCUIThreadDlg::OnInitDialog()
 {
     CDialogEx::OnInitDialog();
 
@@ -106,7 +108,7 @@ BOOL MFCCheckBoxDlg::OnInitDialog()
     return TRUE; // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void MFCCheckBoxDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CMFCUIThreadDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
     if ((nID & 0xFFF0) == IDM_ABOUTBOX)
     {
@@ -123,7 +125,7 @@ void MFCCheckBoxDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void MFCCheckBoxDlg::OnPaint()
+void CMFCUIThreadDlg::OnPaint()
 {
     if (IsIconic())
     {
@@ -150,20 +152,25 @@ void MFCCheckBoxDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR MFCCheckBoxDlg::OnQueryDragIcon()
+HCURSOR CMFCUIThreadDlg::OnQueryDragIcon()
 {
     return static_cast<HCURSOR>(m_hIcon);
 }
 
-void MFCCheckBoxDlg::OnBnClickedChkStick()
+void CMFCUIThreadDlg::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-    if (m_chk_btn.GetCheck())
-    {
-        SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOREDRAW);
-    }
-    else
-    {
-        /// 取消置顶
-        SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOREDRAW);
-    }
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+    AfxMessageBox(TEXT("hello"));
+    CDialogEx::OnLButtonDblClk(nFlags, point);
+}
+
+void CMFCUIThreadDlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+    // CThreadWnd* pDlg = new CThreadWnd();
+    // pDlg->DoModal();
+
+    CMyThread* pThread = new CMyThread();
+    pThread->CreateThread(); /// CWinThread类的方法
+
+    CDialog::OnLButtonDown(nFlags, point);
 }

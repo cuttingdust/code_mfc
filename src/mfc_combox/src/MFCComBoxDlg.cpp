@@ -1,10 +1,10 @@
 ﻿
-// MFCCheckBoxDlg.cpp: 实现文件
+// MFCComBoxDlg.cpp: 实现文件
 //
 
 #include "framework.h"
-#include "MFCCheckBox.h"
-#include "MFCCheckBoxDlg.h"
+#include "MFCComBox.h"
+#include "MFCComBoxDlg.h"
 #include "afxdialogex.h"
 
 #include <istream>
@@ -50,32 +50,30 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxDlg 对话框
+// CMFCComBoxDlg 对话框
 
 
-CMFCCheckBoxDlg::CMFCCheckBoxDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCCHECKBOX_DIALOG, pParent)
+CMFCComBoxDlg::CMFCComBoxDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCCHECKBOX_DIALOG, pParent)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CMFCCheckBoxDlg::DoDataExchange(CDataExchange* pDX)
+void CMFCComBoxDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
-    // DDX_Control(pDX, IDC_CHK_STICK, m_chk_btn);
 }
 
-BEGIN_MESSAGE_MAP(CMFCCheckBoxDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CMFCComBoxDlg, CDialogEx)
 ON_WM_SYSCOMMAND()
 ON_WM_PAINT()
 ON_WM_QUERYDRAGICON()
-// ON_BN_CLICKED(IDC_CHK_STICK, &CMFCCheckBoxDlg::OnBnClickedChkStick)
-ON_BN_CLICKED(IDC_ADDTOLIST, &CMFCCheckBoxDlg::OnBnClickedAddToList)
+ON_BN_CLICKED(IDC_ADDTOLIST, &CMFCComBoxDlg::OnBnClickedAddToList)
 END_MESSAGE_MAP()
 
 
-// CMFCCheckBoxDlg 消息处理程序
+// CMFCComBoxDlg 消息处理程序
 
-BOOL CMFCCheckBoxDlg::OnInitDialog()
+BOOL CMFCComBoxDlg::OnInitDialog()
 {
     CDialogEx::OnInitDialog();
 
@@ -109,7 +107,7 @@ BOOL CMFCCheckBoxDlg::OnInitDialog()
     return TRUE; // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void CMFCCheckBoxDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CMFCComBoxDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
     if ((nID & 0xFFF0) == IDM_ABOUTBOX)
     {
@@ -126,7 +124,7 @@ void CMFCCheckBoxDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void CMFCCheckBoxDlg::OnPaint()
+void CMFCComBoxDlg::OnPaint()
 {
     if (IsIconic())
     {
@@ -153,25 +151,12 @@ void CMFCCheckBoxDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CMFCCheckBoxDlg::OnQueryDragIcon()
+HCURSOR CMFCComBoxDlg::OnQueryDragIcon()
 {
     return static_cast<HCURSOR>(m_hIcon);
 }
 
-// void CMFCCheckBoxDlg::OnBnClickedChkStick()
-// {
-//     if (m_chk_btn.GetCheck())
-//     {
-//         SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOREDRAW);
-//     }
-//     else
-//     {
-//         /// 取消置顶
-//         SetWindowPos(&wndNoTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOREDRAW);
-//     }
-// }
-
-void CMFCCheckBoxDlg::OnBnClickedAddToList()
+void CMFCComBoxDlg::OnBnClickedAddToList()
 {
     {
         TCHAR ws[256];

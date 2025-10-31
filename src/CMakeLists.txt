@@ -66,14 +66,17 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CommonTools)
 
+####################################################################
 add_subdirectory(mfc_helloworld)
 add_subdirectory(mfc_dlg)
 add_subdirectory(mfc_checkbox)
 add_subdirectory(mfc_combox)
 add_subdirectory(mfc_listbox)
 add_subdirectory(mfc_addr)
-add_subdirectory(mfc_workthread)
-add_subdirectory(mfc_multithreadfindfile)
+#####################################################################
+add_subdirectory(mfc_thread_work)  # 工作者线程
+add_subdirectory(mfc_thread_work_mulfindile) # 多线程更目录查找文件
+add_subdirectory(mfc_thread_ui) #  UI线程
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
