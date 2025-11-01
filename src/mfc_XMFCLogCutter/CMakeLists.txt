@@ -16,13 +16,6 @@ if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${OUT_RUN_PATH})
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "XApp")
 
-    # 显式指定入口点为 main 函数
-    target_link_options(${PROJECT_NAME} PRIVATE
-        "/SUBSYSTEM:CONSOLE"
-        "/ENTRY:mainCRTStartup"  # 对于 main 函数
-        # 或者 "/ENTRY:main" 对于某些情况
-    )
-
     # set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/GL")
     # set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/LTCG")
 endif()
