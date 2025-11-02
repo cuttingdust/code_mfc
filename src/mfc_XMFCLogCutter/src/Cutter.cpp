@@ -87,7 +87,7 @@ void CMainDialog::OnCancel()
     BOOL bExit = TRUE;
     if (m_pCutter->IsRunning())
     {
-        if (MessageBox(TEXT("工作尚未完成，确定退出码?"), NULL, MB_YESNO) == IDYES)
+        if (MessageBox(TEXT("工作尚未完成，确定退出码?"), NULL, MB_YESNO) != IDYES)
         {
             bExit = FALSE;
         }
