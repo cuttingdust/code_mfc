@@ -61,4 +61,35 @@ inline void** CSimpleList::GetNextPtr(void* p) const
     return (void**)((BYTE*)p + m_nNextOffset);
 }
 
+/////////////////////////////////////////////////////////////////////////////////
+template <class TYPE>
+class CTypedSimpleList : public CSimpleList /// 模板原则 组合大于继承  除了类型检查 就是语言限制派生
+{
+public:
+    CTypedSimpleList(int nNextOffset = 0) : CSimpleList(nNextOffset)
+    {
+    }
+    void AddHead(TYPE p)
+    {
+        CSimpleList::AddHead((void*)p);
+    }
+    TYPE GetHead()
+    {
+        return (TYPE)CSimpleList::GetHead();
+    }
+    TYPE GetNext(TYPE p)
+    {
+        return (TYPE)CSimpleList::GetNext(p);
+    }
+    BOOL Remove(TYPE p)
+    {
+        return CSimpleList::Remove(p);
+    }
+    operator TYPE()
+    {
+        return (TYPE)CSimpleList::GetHead();
+    }
+}; /// 使用CTypedSimplelist将简单链表泛型化
+
+
 #endif // !__AFXTLS_H
