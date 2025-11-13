@@ -1,5 +1,5 @@
 ﻿#include "_afx.h"
-#include <iostream>
+#include <stdio.h>
 
 class CBoy : public CObject
 {
