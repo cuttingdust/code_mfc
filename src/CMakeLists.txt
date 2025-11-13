@@ -28,7 +28,7 @@ if(OpenMP_FOUND)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-# OpenMP
+# MFC
 find_package(MFC)
 message("MFC_FOUND = ${MFC_FOUND}")
 
