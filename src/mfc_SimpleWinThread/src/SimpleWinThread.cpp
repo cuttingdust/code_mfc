@@ -16,13 +16,15 @@ struct CMyThreadData : public CNoTrackObject
     int nSomeData;
 };
 
-CThreadLocal<CMyThreadData> g_myThreadData;
+// CThreadLocal<CMyThreadData> g_myThreadData;
+THREAD_LOCAL(CMyThreadData, g_myThreadData);
 
 void        show();
 UINT WINAPI ThreadFunc(LPVOID lpParam)
 {
     g_myThreadData->nSomeData = (int)lpParam;
     show();
+    // Sleep(100);
     return 0;
 }
 
