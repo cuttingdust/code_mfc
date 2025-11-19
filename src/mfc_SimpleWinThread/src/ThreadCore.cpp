@@ -96,14 +96,39 @@ BOOL CWinThread::CreateThread(DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_A
 
 CWinThread::~CWinThread()
 {
+    /// 关闭线程句柄，释放系统资源
     if (m_hThread != NULL)
     {
         CloseHandle(m_hThread);
     }
 
+    /// 获取当前线程的模块线程状态
     AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+
+    /// 关键清理：防止悬空指针
+    ///
+    /// 场景分析：
+    /// 1. 正常情况：线程已结束，pState->m_pCurrentWinThread 应该为 NULL
+    /// 2. 异常情况：线程对象被提前删除，但线程还在运行
+    /// 3. 自引用情况：当前线程正在销毁自己的 CWinThread 对象
+    ///
+    /// 这个检查的作用：
+    /// - 如果当前销毁的对象正是线程状态中记录的对象
+    /// - 需要将其置为 NULL，避免后续访问已销毁的对象
+    /// - 防止出现悬空指针导致的崩溃或未定义行为
     if (pState->m_pCurrentWinThread == this)
     {
+        /// 为什么要这样做？
+        ///
+        /// 考虑以下场景：
+        /// 线程A正在执行，其线程状态中记录: m_pCurrentWinThread = 对象X
+        /// 如果对象X被意外销毁，但线程A还在运行并尝试访问线程状态
+        /// 就会访问到已销毁的内存，导致崩溃
+        ///
+        /// 这个清理确保：
+        /// 1. 对象销毁时，如果它还在被线程状态引用，就解除引用
+        /// 2. 避免其他代码通过 AfxGetThread() 获取到已销毁的对象
+        /// 3. 特别是对于自动删除的线程对象(m_bAutoDelete = TRUE)
         pState->m_pCurrentWinThread = NULL;
     }
 }
