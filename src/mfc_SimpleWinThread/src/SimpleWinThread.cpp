@@ -1,8 +1,10 @@
 ﻿#include "_AFXTLS.h"
+#include "_AFXWIN.h"
+
+// #include <process.h>
 
 #include <stdio.h>
 
-#include <process.h>
 
 /// 带组合的节点
 struct MyThreadData : public CNoTrackObject
@@ -25,6 +27,13 @@ UINT WINAPI ThreadFunc(LPVOID lpParam)
     g_myThreadData->nSomeData = (int)lpParam;
     show();
     // Sleep(100);
+    return 0;
+}
+
+/// 测试CWinThread工作者线程
+UINT MyFunc(LPVOID lpParam)
+{
+    printf("Thread id:%d\n", AfxGetThread()->m_nThreadID);
     return 0;
 }
 
@@ -82,17 +91,24 @@ int main(int argc, char *argv[])
 
     {
         /// 测试MFC工作者线程
-        HANDLE h[10];
-        UINT   uID;
-        /// 启10个线程
+        // HANDLE h[10];
+        // UINT   uID;
+        // /// 启10个线程
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     h[i] = (HANDLE)::_beginthreadex(NULL, 0, ThreadFunc, (void *)i, 0, &uID);
+        // }
+        // ::WaitForMultipleObjects(10, h, TRUE, INFINITE);
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     ::CloseHandle(h[i]);
+        // }
+    }
+
+    {
         for (int i = 0; i < 10; i++)
         {
-            h[i] = (HANDLE)::_beginthreadex(NULL, 0, ThreadFunc, (void *)i, 0, &uID);
-        }
-        ::WaitForMultipleObjects(10, h, TRUE, INFINITE);
-        for (int i = 0; i < 10; i++)
-        {
-            ::CloseHandle(h[i]);
+            AfxBeginThread(MyFunc, NULL);
         }
     }
 
