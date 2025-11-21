@@ -79,11 +79,12 @@ add_subdirectory(mfc_thread_work_mulfindile) # 多线程更目录查找文件
 add_subdirectory(mfc_thread_ui) #  UI线程
 add_subdirectory(mfc_XMFCLogCutter) #  UI线程
 #####################################################################
-add_subdirectory(mfc_Win32Cap)
+add_subdirectory(mfc_Win32Cap) # 原理 使用Windows API 封装MFC
 add_subdirectory(mfc_SimpleCWinApp)
 add_subdirectory(mfc_SimpleCRTTI)
 add_subdirectory(mfc_SimpleWinThread)
 add_subdirectory(mfc_SimpleWinApp)
+add_subdirectory(mfc_SimpleCPlex)
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
