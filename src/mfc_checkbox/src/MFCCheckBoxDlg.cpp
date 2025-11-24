@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 // CMFCCheckBoxDlg 对话框
 
 
-MFCCheckBoxDlg::CMFCListBoxDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCCHECKBOX_DIALOG, pParent)
+MFCCheckBoxDlg::MFCCheckBoxDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_MFCCHECKBOX_DIALOG, pParent)
 {
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }

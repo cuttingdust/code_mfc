@@ -1,6 +1,6 @@
-﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ 生成的包含文件。
-// 供 MFCUIThread.rc 使用
+//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ ���ɵİ����ļ���
+// �� MFCUIThread.rc ʹ��
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
