@@ -5,6 +5,8 @@
 #include "CDlg.h"
 #include "resource.h"
 
+#include <iostream>
+
 // CDlg 对话框
 
 IMPLEMENT_DYNAMIC(CDlg, CDialogEx)
@@ -25,6 +27,11 @@ void CDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Text(pDX, IDC_EDIT1, m_edit_cs);
 }
 
+LRESULT CDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+    return CWnd::WindowProc(message, wParam, lParam);
+}
+
 void CDlg::OnBnClickedButton1()
 {
     /// windows api 的使用
@@ -43,7 +50,15 @@ void CDlg::OnBnClickedButton1()
 
 BEGIN_MESSAGE_MAP(CDlg, CDialogEx)
 ON_BN_CLICKED(IDC_BUTTON1, &CDlg::OnBnClickedButton1)
+ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
+
+void CDlg::OnClose()
+{
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+    std::cout << "CDlg::OnClose called" << std::endl;
+    CDialogEx::OnClose();
+}
 
 // CDlg 消息处理程序
