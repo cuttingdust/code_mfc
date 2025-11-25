@@ -1,0 +1,37 @@
+# 🏗️ CMapPtrToPtr 架构详解
+## 核心数据结构
+
+CMapPtrToPtr
+├── 哈希表 (m_pHashTable)
+│   ├── 桶[0] → CAssoc链表
+│   ├── 桶[1] → CAssoc → CAssoc → NULL
+│   ├── ...
+│   └── 桶[n-1] → CAssoc链表
+├── 内存池管理
+│   ├── m_pBlocks: 内存块链表
+│   ├── m_pFreeList: 空闲节点池
+│   └── m_nBlockSize: 块大小
+└── 状态信息
+    ├── m_nCount: 元素数量
+    └── m_nHashTableSize: 哈希表大小
+	
+## 哈希算法原理
+// 哈希函数：将指针地址映射到哈希表范围内
+UINT HashKey(void* key) const {
+    return ((UINT)(key) >> 4) % m_nHashTableSize;
+}
+
+// 链地址法解决冲突
+// 相同哈希值的键通过链表连接
+
+
+## 性能特征
+* 查找：平均 O(1)，最坏 O(n)（当所有键哈希冲突时）
+
+* 插入：平均 O(1)
+
+* 删除：平均 O(1)
+
+* 内存：预分配块减少内存碎片
+
+这个类为 MFC 提供了高效的键值存储能力，是句柄映射等核心功能的基础设施。
