@@ -21,12 +21,13 @@ public:
 #endif
 
 protected:
-    virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV 支持
-
+    void    DoDataExchange(CDataExchange* pDX) override; // DDX/DDV 支持
+    LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam) override;
     DECLARE_MESSAGE_MAP()
 public:
     afx_msg void OnBnClickedButton1();
     CButton      m_btn_OK;
     CEdit        m_edit_ctl;
     CString      m_edit_cs;
+    afx_msg void OnClose();
 };

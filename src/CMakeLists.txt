@@ -85,6 +85,7 @@ add_subdirectory(mfc_SimpleCRTTI)
 add_subdirectory(mfc_SimpleWinThread)
 add_subdirectory(mfc_SimpleWinApp)
 add_subdirectory(mfc_SimpleCPlex)
+add_subdirectory(mfc_SimpleWnd)
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
