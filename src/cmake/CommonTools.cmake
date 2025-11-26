@@ -71,20 +71,37 @@ set(LOG_MOUDLES
 
 # 获取当前目录下源码和头文件
 macro(get_src_include)
-   aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/src SRC)
+    aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/src SRC)
     aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/Source SOURCE)
+	aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SRC_CURRENT)
 
     list(APPEND SRC ${SOURCE})
+    list(APPEND SRC ${SRC_CURRENT})
 	# message("SRC = ${SRC}")
 	
 	###################################################################
 	
-	FILE(GLOB H_FILE_I ${CMAKE_CURRENT_LIST_DIR}/include/*.h)
-    
+	FILE(GLOB H_FILE_I 
+		${CMAKE_CURRENT_LIST_DIR}/include/*.h
+		${CMAKE_CURRENT_LIST_DIR}/*.h
+	)
+	# message("H_FILE_I = ${H_FILE_I}")
+	
+	##################################################################
+	FILE(GLOB ASM_FILES 
+		${CMAKE_CURRENT_LIST_DIR}/asm/*.asm
+		${CMAKE_CURRENT_LIST_DIR}/*.asm
+	)
+	# message("ASM_FILES = ${ASM_FILES}")
+	
 	##################################################################
 	# 安装的时候 不暴露出去
-	
-	FILE(GLOB RC_FILE ${CMAKE_CURRENT_LIST_DIR}/src/*.rc)
+
+	FILE(GLOB RC_FILE 
+		${CMAKE_CURRENT_LIST_DIR}/src/*.rc
+		${CMAKE_CURRENT_LIST_DIR}/*.rc
+	)
+	# message("H_FILE_I = ${H_FILE_I}")
 	
 	# 新增：将 resource.h
     FILE(GLOB RESOURCE_H_FILES
@@ -94,6 +111,7 @@ macro(get_src_include)
         ${CMAKE_CURRENT_LIST_DIR}/include/resource.h
         ${CMAKE_CURRENT_LIST_DIR}/include/RESOURCE.h
         ${CMAKE_CURRENT_LIST_DIR}/include/Resource.h
+		${CMAKE_CURRENT_LIST_DIR}/resource.h
     )
     
     if(RESOURCE_H_FILES)
@@ -105,14 +123,21 @@ macro(get_src_include)
         source_group("Resource Files" FILES ${RC_FILE})
     endif()
 
-	FILE(GLOB UI_FILES ${CMAKE_CURRENT_LIST_DIR}/src/*.ui)
+	FILE(GLOB UI_FILES 
+		${CMAKE_CURRENT_LIST_DIR}/src/*.ui
+		${CMAKE_CURRENT_LIST_DIR}/*.ui
+	)
+	
     if(UI_FILES)
         qt_wrap_ui(UIC_HEADER ${UI_FILES})
         source_group("Resource Files" FILES ${UI_FILES})
         source_group("Generate Files" FILES ${UIC_HEADER})
     endif()
 
-	FILE(GLOB QRC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/src/*.qrc)
+	FILE(GLOB QRC_SOURCE_FILES 
+		${CMAKE_CURRENT_LIST_DIR}/*.qrc
+		${CMAKE_CURRENT_LIST_DIR}/src/*.qrc
+	)
     if(QRC_SOURCE_FILES)
         qt6_add_resources(QRC_FILES ${QRC_SOURCE_FILES})
         # qt_wrap_cpp() moc 相关
@@ -120,7 +145,10 @@ macro(get_src_include)
 		source_group("Generate Files" FILES ${QRC_FILES})
     endif()
 	
-	FILE(GLOB PROTO_FILES ${CMAKE_CURRENT_LIST_DIR}/src/*.proto)
+	FILE(GLOB PROTO_FILES 
+		${CMAKE_CURRENT_LIST_DIR}/src/*.proto
+		${CMAKE_CURRENT_LIST_DIR}/*.proto
+	)
 	if(PROTO_FILES)
 		source_group("Resource Files" FILES ${PROTO_FILES})
 		if(PROTOC_EXECUTABLE)
@@ -149,6 +177,10 @@ macro(get_src_include)
         source_group("Generate Files" FILES ${PROTO_CC_FILE})
         source_group("Generate Files" FILES ${PROTO_HREADER_FILE})		
         endif()
+	endif()
+	
+	if(ASM_FILES)
+		source_group("Assembly Files" FILES ${ASM_FILES})		
 	endif()
 endmacro()
 
@@ -219,7 +251,6 @@ macro(set_cpp name)
         cxx_std_23
     )
 
-
     target_link_options(${name} PRIVATE
         -D2:-AllowCompatibleILVersions
     )
@@ -248,19 +279,6 @@ macro(set_cpp name)
             MSVC_RUNTIME_LIBRARY MultiThreadedDLL
         )
     endif()
-	
-	if(MFC_FOUND)
-		#set_target_properties(${name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-	
-		target_link_options(${name} PRIVATE /ENTRY:wWinMainCRTStartup)
-		
-		target_compile_definitions(${name} PRIVATE 
-		-DWIN32
-		-D_DEBUG
-		-D_WINDOWS
-		-D_AFXDLL
-		)
-	endif()
 
     if(CMAKE_BUILD_TYPE STREQUAL "")
         set(CMAKE_BUILD_TYPE RelWithDebInfo)
