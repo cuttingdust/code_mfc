@@ -3,9 +3,6 @@ get_filename_component(CURRENT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 project(${CURRENT_DIR})
 
-set(DPS_LIBRARYS
-    ${OpenCV_LIBS}
-)
 
 cpp_execute(${PROJECT_NAME})
 
