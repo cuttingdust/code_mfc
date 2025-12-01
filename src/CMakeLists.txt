@@ -40,10 +40,10 @@ endif()
 #==================================================================================#
 
 # OpenCV
-find_package(OpenCV CONFIG REQUIRED)
-message("OpenCV_FOUND = ${OpenCV_FOUND}")
-message("OpenCV_VERSION = ${OpenCV_VERSION}")
-message("OpenCV_LIBS = ${OpenCV_LIBS}")
+# find_package(OpenCV CONFIG REQUIRED)
+# message("OpenCV_FOUND = ${OpenCV_FOUND}")
+# message("OpenCV_VERSION = ${OpenCV_VERSION}")
+# message("OpenCV_LIBS = ${OpenCV_LIBS}")
 
 # 外部依赖项
 set(DPS_INCLUDES)
@@ -87,6 +87,9 @@ add_subdirectory(mfc_SimpleWinApp)
 add_subdirectory(mfc_SimpleCPlex)
 add_subdirectory(mfc_SimpleWnd)
 add_subdirectory(mfc_SimpleMsg)  ## SimpleMFC
+#####################################################################
+add_subdirectory(mfc_EDU)
+
 
 # 拷贝assert目录到输出目录
 set(ASSERT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assert)
