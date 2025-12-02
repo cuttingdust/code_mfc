@@ -263,6 +263,19 @@ macro(set_cpp name)
     )
 
     if(MSVC)
+		if(MFC_FOUND)
+		#set_target_properties(${name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+	
+		target_link_options(${name} PRIVATE /ENTRY:wWinMainCRTStartup)
+		
+		target_compile_definitions(${name} PRIVATE 
+		-DWIN32
+		-D_DEBUG
+		-D_WINDOWS
+		-D_AFXDLL
+		)
+		endif()
+	
 		 target_compile_definitions(${name} PUBLIC
 			-D_CRT_SECURE_NO_WARNINGS
 		)
