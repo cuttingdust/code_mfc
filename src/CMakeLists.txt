@@ -89,6 +89,7 @@ add_subdirectory(mfc_SimpleWnd)
 add_subdirectory(mfc_SimpleMsg)  ## SimpleMFC
 #####################################################################
 add_subdirectory(mfc_EDU)
+add_subdirectory(mfc_DrawRect)
 
 
 # 拷贝assert目录到输出目录
