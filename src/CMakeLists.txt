@@ -93,6 +93,7 @@ add_subdirectory(mfc_DrawRect)
 add_subdirectory(mfc_MultiView)
 add_subdirectory(mfc_DrawRectArchive)
 add_subdirectory(mfc_ArchiveDemon)
+add_subdirectory(mfc_TingTuGame)
 
 
 # 拷贝assert目录到输出目录
