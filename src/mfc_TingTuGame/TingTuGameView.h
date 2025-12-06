@@ -5,6 +5,12 @@
 #pragma once
 #include "TingTuGameDoc.h"
 
+struct pos
+{
+    int row; ///< 方块所在的行
+    int col; ///< 方块所在的列
+};
+
 class CTingTuGameView : public CView
 {
 protected: // 仅从序列化创建
@@ -17,6 +23,12 @@ public:
 
     // 操作
 public:
+    void DrawCellBlock(CDC* pDC, pos destsite, pos srcsite);
+    void DrawBlankBlock(CDC* pDC);
+    void DrawLines(CDC* pDC);
+    void DrawGameBlocks(CDC* pDC);
+
+    BOOL m_bFirstRun;
     // 重写
 public:
     virtual void OnDraw(CDC* pDC); // 重写以绘制该视图
@@ -35,6 +47,13 @@ protected:
     // 生成的消息映射函数
 protected:
     DECLARE_MESSAGE_MAP()
+    virtual void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
+
+public:
+    afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+    afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+    afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+    afx_msg void OnSetFocus(CWnd* pOldWnd);
 };
 
 #ifndef _DEBUG // TingTuGameView.cpp 中的调试版本
