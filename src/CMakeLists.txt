@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
 # 使用 vcpkg 工具链文件 Warning  工具连设置必须是在project 前面
-set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+#set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
+#set(CMAKE_TOOLCHAIN_FILE build/generators/conan_toolchain.cmake CACHE STRING "Conan toolchain file")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(mfc_code)
@@ -40,10 +41,11 @@ endif()
 #==================================================================================#
 
 # OpenCV
-# find_package(OpenCV CONFIG REQUIRED)
-# message("OpenCV_FOUND = ${OpenCV_FOUND}")
-# message("OpenCV_VERSION = ${OpenCV_VERSION}")
-# message("OpenCV_LIBS = ${OpenCV_LIBS}")
+find_package(OpenCV CONFIG REQUIRED)
+message("OpenCV_FOUND = ${OpenCV_FOUND}")
+message("OpenCV_VERSION = ${OpenCV_VERSION}")
+message("OpenCV_LIBS = ${OpenCV_LIBS}")
+message("OpenCV_INCLUDE_DIRS = ${OpenCV_INCLUDE_DIRS}")
 
 # 外部依赖项
 set(DPS_INCLUDES)
@@ -94,6 +96,7 @@ add_subdirectory(mfc_MultiView)
 add_subdirectory(mfc_DrawRectArchive)
 add_subdirectory(mfc_ArchiveDemon)
 add_subdirectory(mfc_TingTuGame)
+add_subdirectory(mfc_Video)
 
 
 # 拷贝assert目录到输出目录
