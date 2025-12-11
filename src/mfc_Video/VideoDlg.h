@@ -36,4 +36,5 @@ protected:
     DECLARE_MESSAGE_MAP()
 public:
     afx_msg void OnBnClickedShowImg();
+    afx_msg void OnBnClickedOpenImg();
 };
