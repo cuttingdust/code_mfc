@@ -12,6 +12,18 @@ if(MSVC)
     set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${OUT_RUN_PATH})
     set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER "XOOP")
 
+    # --- 关键：设置运行时库和子系统，避免链接错误 ---
+    # 为Debug配置设置调试运行时库(/MDd 或 /MTd)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:Debug>:/MDd>"  # 使用动态调试运行时库（推荐）
+        # "$<$<CONFIG:Debug>:/MTd>" # 或者使用静态调试运行时库
+    )
+    # 为Release配置设置发布运行时库(/MD 或 /MT)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        "$<$<CONFIG:Release>:/MD>"   # 使用动态发布运行时库（推荐）
+        # "$<$<CONFIG:Release>:/MT>" # 或者使用静态发布运行时库
+    )
+
     # set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/GL")
     # set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/LTCG")
 

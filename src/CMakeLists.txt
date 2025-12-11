@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 # 使用 vcpkg 工具链文件 Warning  工具连设置必须是在project 前面
 #set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
-#set(CMAKE_TOOLCHAIN_FILE build/generators/conan_toolchain.cmake CACHE STRING "Conan toolchain file")
+set(CMAKE_TOOLCHAIN_FILE build/generators/conan_toolchain.cmake CACHE STRING "Conan toolchain file")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(mfc_code)
@@ -62,7 +62,7 @@ set(QRC_SOURCE_FILES)
 
 # 忽略特定库
 if(MSVC)
-SET(CMAKE_EXE_LINKER_FLAGS /NODEFAULTLIB:"libcmt.lib;libc.lib")
+SET(CMAKE_EXE_LINKER_FLAGS /NODEFAULTLIB:"libcmt.lib;libc.lib;msvcrt.lib")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")

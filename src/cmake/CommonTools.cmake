@@ -322,6 +322,13 @@ macro(set_cpp name)
 
     if(WIN32)
         get_target_property(debug_postfix ${name} DEBUG_POSTFIX)
+		if(MSVC)
+		 target_compile_options(${name} PRIVATE
+			$<$<CONFIG:Debug>:/ZI>
+			$<$<CONFIG:Debug>:/MDd>
+			$<$<CONFIG:Release>:/MD>
+			)
+		endif()
     endif()
 endmacro()
 
