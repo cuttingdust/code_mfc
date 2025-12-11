@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <opencv2/videoio.hpp>
 
 
 // CVideoDlg 对话框
@@ -37,4 +38,8 @@ protected:
 public:
     afx_msg void OnBnClickedShowImg();
     afx_msg void OnBnClickedOpenImg();
+    afx_msg void OnBnClickedOpenVideo();
+
+    /// 播放视频
+    cv::VideoCapture m_video;
 };

@@ -70,6 +70,7 @@ ON_WM_PAINT()
 ON_WM_QUERYDRAGICON()
 ON_BN_CLICKED(IDC_SHOWIMG, &CVideoDlg::OnBnClickedShowImg)
 ON_BN_CLICKED(IDC_OPENIMG, &CVideoDlg::OnBnClickedOpenImg)
+ON_BN_CLICKED(IDC_OPEN_VIDEO, &CVideoDlg::OnBnClickedOpenVideo)
 END_MESSAGE_MAP()
 
 
@@ -289,6 +290,84 @@ void CVideoDlg::OnBnClickedOpenImg()
                       height,                 /// 显示多少行数据
                       out.data, &bmi, DIB_RGB_COLORS);
 
+
+    /// 是否CDC
+    ReleaseDC(dc);
+}
+
+void CVideoDlg::OnBnClickedOpenVideo()
+{
+    wchar_t buffer[MAX_PATH];
+    if (::GetCurrentDirectory(MAX_PATH, buffer) > 0)
+    {
+        ::PathAppend(buffer, LR"(assert)");
+    }
+
+    /// 文件打开窗口
+    CFileDialog fdlg(TRUE,                              /// 打开文件
+                     NULL, NULL,                        /// 默认后缀和文件名
+                     NULL,                              /// 类型，比如覆盖
+                     L"视频文件(mp4 avi)|*.mp4;*.avi|", /// 后缀名过滤
+                     this);
+
+    /// 设置对话框标题
+    fdlg.m_ofn.lpstrTitle      = L"选择视频文件";
+    fdlg.m_ofn.lpstrInitialDir = buffer;
+    if (fdlg.DoModal() != IDOK)
+    {
+        return;
+    }
+
+    /// 获取到文件名
+    /// MFC 宽字节 =》 opencv 多字节
+    USES_CONVERSION;
+
+    if (!m_video.open(W2A(fdlg.GetPathName().GetBuffer())))
+    {
+        MessageBox(L"Open video failed!");
+        return;
+    }
+
+    /// 读取一帧画面
+    cv::Mat mat;
+    m_video.read(mat);
+
+
+    /// 获取窗口对象 IDC_IMG
+    CWnd* pWin = GetDlgItem(IDC_IMG);
+
+    /// 获取窗口大小
+    RECT rect;
+    pWin->GetClientRect(&rect);
+    int width  = rect.right;
+    int height = rect.bottom;
+
+    /// 获取窗口显示句柄
+    CDC* dc  = pWin->GetDC();
+    HDC  hdc = dc->GetSafeHdc();
+
+    /// 解决图像显示灰掉并斜掉的问题 宽度四字节对齐问题
+    if (width % 4 != 0)
+        width = width + (4 - width % 4);
+
+    /// 显示图像
+    /// 调整图像尺寸与窗口一致
+    cv::Mat out;
+    cv::resize(mat, out, cv::Size(width, height));
+
+    /// 位图头部信息
+    BITMAPINFO bmi              = { 0 };
+    bmi.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
+    bmi.bmiHeader.biWidth       = width;
+    bmi.bmiHeader.biHeight      = -height; /// 负数 左上角开始 由上到下
+    bmi.bmiHeader.biPlanes      = 1;
+    bmi.bmiHeader.biBitCount    = 24; /// 24位 三字节 RGB
+    bmi.bmiHeader.biCompression = BI_RGB;
+
+    SetDIBitsToDevice(hdc, 0, 0,              /// 控件显示的起始位置
+                      width, height, 0, 0, 0, /// 原图的显示起始位置和行号
+                      height,                 /// 显示多少行数据
+                      out.data, &bmi, DIB_RGB_COLORS);
 
     /// 是否CDC
     ReleaseDC(dc);
