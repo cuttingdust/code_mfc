@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include <opencv2/videoio.hpp>
+#include <opencv2/opencv.hpp>
 
 
 // CVideoDlg 对话框
@@ -42,4 +42,8 @@ public:
 
     /// 播放视频
     cv::VideoCapture m_video;
+    CWnd*            pWin = NULL;
+    CDC*             dc   = NULL;
+    HDC              hdc  = NULL;
+    afx_msg void     OnTimer(UINT_PTR nIDEvent);
 };
