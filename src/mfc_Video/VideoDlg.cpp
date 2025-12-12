@@ -86,6 +86,7 @@ CVideoDlg::CVideoDlg(CWnd* pParent /*=nullptr*/) : CDialogEx(IDD_VIDEO_DIALOG, p
 void CVideoDlg::DoDataExchange(CDataExchange* pDX)
 {
     CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_PLAY_SLIDER, m_play);
 }
 
 BEGIN_MESSAGE_MAP(CVideoDlg, CDialogEx)
@@ -96,6 +97,7 @@ ON_BN_CLICKED(IDC_SHOWIMG, &CVideoDlg::OnBnClickedShowImg)
 ON_BN_CLICKED(IDC_OPENIMG, &CVideoDlg::OnBnClickedOpenImg)
 ON_BN_CLICKED(IDC_OPEN_VIDEO, &CVideoDlg::OnBnClickedOpenVideo)
 ON_WM_TIMER()
+ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -137,6 +139,9 @@ BOOL CVideoDlg::OnInitDialog()
     /// 获取窗口显示句柄
     dc  = pWin->GetDC();
     hdc = dc->GetSafeHdc();
+
+    /// 设置滑动条
+    m_play.SetRangeMax(999);
 
     return TRUE; // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -395,4 +400,26 @@ void CVideoDlg::OnTimer(UINT_PTR nIDEvent)
     cv::Mat mat;
     m_video.read(mat);
     DrawToHdc(mat, hdc, width, height);
+
+
+    /// 设置进度
+    /// 总帧数
+    int frameCount = m_video.get(cv::CAP_PROP_FRAME_COUNT);
+    if (frameCount <= 0)
+    {
+        return;
+    }
+
+    /// 当前播放的帧数
+    int curFrame = m_video.get(cv::CAP_PROP_POS_FRAMES);
+    /// 播放的百分比位置
+    double p = (double)curFrame / (double)frameCount;
+    m_play.SetPos(p * m_play.GetRangeMax());
+}
+
+void CVideoDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+    // TODO: 在此添加消息处理程序代码和/或调用默认值
+
+    CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }

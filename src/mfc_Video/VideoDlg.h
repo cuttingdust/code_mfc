@@ -46,4 +46,5 @@ public:
     CDC*             dc   = NULL;
     HDC              hdc  = NULL;
     afx_msg void     OnTimer(UINT_PTR nIDEvent);
+    CSliderCtrl      m_play;
 };
