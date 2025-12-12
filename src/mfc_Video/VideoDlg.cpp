@@ -391,6 +391,13 @@ void CVideoDlg::OnTimer(UINT_PTR nIDEvent)
     // TODO: 在此添加消息处理程序代码和/或调用默认值
 
     CDialogEx::OnTimer(nIDEvent);
+    /// 滑动条按下
+    if (m_bPress)
+    {
+        return;
+    }
+
+
     /// 获取窗口大小
     RECT rect;
     pWin->GetClientRect(&rect);
@@ -422,4 +429,26 @@ void CVideoDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
     // TODO: 在此添加消息处理程序代码和/或调用默认值
 
     CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
+    /// 处理滑动条定时器
+    m_bPress = true;
+
+    /// 只处理滑动条松开事件
+    if (nSBCode != SB_ENDSCROLL)
+    {
+        return;
+    }
+
+    m_bPress = false;
+
+    /// 拖动到的位置
+    double pos = m_play.GetPos();
+    double max = m_play.GetRangeMax();
+    if (max <= 0)
+    {
+        return;
+    }
+    double p = pos / max;
+
+    int frameCount = m_video.get(cv::CAP_PROP_FRAME_COUNT);
+    m_video.set(cv::CAP_PROP_POS_FRAMES, p * frameCount);
 }

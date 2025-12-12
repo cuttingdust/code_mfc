@@ -47,4 +47,7 @@ public:
     HDC              hdc  = NULL;
     afx_msg void     OnTimer(UINT_PTR nIDEvent);
     CSliderCtrl      m_play;
+    afx_msg void     OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+    /// 是否按下滑动条
+    bool m_bPress = false;
 };
