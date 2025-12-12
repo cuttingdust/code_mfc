@@ -98,6 +98,8 @@ ON_BN_CLICKED(IDC_OPENIMG, &CVideoDlg::OnBnClickedOpenImg)
 ON_BN_CLICKED(IDC_OPEN_VIDEO, &CVideoDlg::OnBnClickedOpenVideo)
 ON_WM_TIMER()
 ON_WM_HSCROLL()
+ON_BN_CLICKED(IDC_OPEN_CAM, &CVideoDlg::OnBnClickedOpenCam)
+ON_BN_CLICKED(IDC_CUT_IMG, &CVideoDlg::OnBnClickedCutImg)
 END_MESSAGE_MAP()
 
 
@@ -404,7 +406,6 @@ void CVideoDlg::OnTimer(UINT_PTR nIDEvent)
     int width  = rect.right;
     int height = rect.bottom;
     /// 读取一帧画面
-    cv::Mat mat;
     m_video.read(mat);
     DrawToHdc(mat, hdc, width, height);
 
@@ -451,4 +452,63 @@ void CVideoDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
     int frameCount = m_video.get(cv::CAP_PROP_FRAME_COUNT);
     m_video.set(cv::CAP_PROP_POS_FRAMES, p * frameCount);
+}
+
+void CVideoDlg::OnBnClickedOpenCam()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    /// 打开0索引相机
+    if (!m_video.open(0))
+    {
+        MessageBox(L"Open Cam failed!");
+        return;
+    }
+
+    /// 读取一帧画面
+    cv::Mat mat;
+    m_video.read(mat);
+
+    /// 获取窗口对象 IDC_IMG
+    CWnd* pWin = GetDlgItem(IDC_IMG);
+
+    /// 获取窗口大小
+    RECT rect;
+    pWin->GetClientRect(&rect);
+    int width  = rect.right;
+    int height = rect.bottom;
+
+    DrawToHdc(mat, hdc, width, height);
+
+    /// 获取视频播放帧率，设置定时器
+    int fps = m_video.get(cv::CAP_PROP_FPS);
+    if (fps <= 0)
+    {
+        fps = 25;
+    }
+
+    KillTimer(1);
+    SetTimer(1, 1000 / fps, NULL);
+}
+
+void CVideoDlg::OnBnClickedCutImg()
+{
+    // TODO: 在此添加控件通知处理程序代码
+    if (mat.empty())
+    {
+        return;
+    }
+    /// 保存图片
+    CFileDialog fdlg(FALSE, L"", L"cutimg.png", 0, L"另存为图片（png）|*.png|", this);
+    if (fdlg.DoModal() != IDOK)
+    {
+        return;
+    }
+    CString url = fdlg.GetPathName();
+    /// 宽字节转换
+    USES_CONVERSION;
+    bool re = imwrite(W2A(url.GetBuffer(0)), mat);
+    if (!re)
+    {
+        MessageBox(L"截图失败");
+    }
 }

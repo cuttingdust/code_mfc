@@ -49,5 +49,10 @@ public:
     CSliderCtrl      m_play;
     afx_msg void     OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
     /// 是否按下滑动条
-    bool m_bPress = false;
+    bool         m_bPress = false;
+    afx_msg void OnBnClickedOpenCam();
+
+    /// 读取一帧画面
+    cv::Mat      mat;
+    afx_msg void OnBnClickedCutImg();
 };
